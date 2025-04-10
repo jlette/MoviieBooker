@@ -9,6 +9,7 @@ import { User } from './users/entity/user.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { HttpModule } from '@nestjs/axios';
 import { MoviesModule } from './movies/module/movies.module';
+import { ReservationModule } from './reservation/module/reservation.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -18,7 +19,10 @@ import { MoviesModule } from './movies/module/movies.module';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        host: configService.get<string>('DB_HOST'),
+        url: configService.get<string>('DB_HOST'),
+        ssl: {
+          rejectUnauthorized: false,
+        },
         port: configService.get<number>('DB_PORT'),
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
@@ -32,6 +36,7 @@ import { MoviesModule } from './movies/module/movies.module';
 
     UserModuleModule,
     MoviesModule,
+    ReservationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
