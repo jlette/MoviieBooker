@@ -7,6 +7,8 @@ import { DataSource } from 'typeorm';
 import { UserModuleModule } from './users/user-module/user-module.module';
 import { User } from './users/entity/user.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { HttpModule } from '@nestjs/axios';
+import { MoviesModule } from './movies/module/movies.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -29,6 +31,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
 
     UserModuleModule,
+    MoviesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
